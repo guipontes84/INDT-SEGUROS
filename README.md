@@ -1,15 +1,12 @@
 # Seguro Plataforma
 
-Plataforma simples para demonstrar o ciclo de uma proposta de seguro e sua contratação, separando claramente as responsabilidades entre dois serviços: um cuida da proposta e o outro cuida da contratação.
+Plataforma para demonstrar o ciclo de uma proposta de seguro e sua contratacao, separando as responsabilidades em dois servicos de backend e uma interface web.
 
-O desenho do projeto foi pensado para uma apresentação limpa:
-
-- o `PropostaService` recebe a proposta, persiste, altera status e expõe os tipos de seguro
-- o `ContratacaoService` valida se a proposta está liberada para contratação e registra a contratação
-- o front Angular consome os dois serviços e mostra a experiência completa
-- o SQL Server guarda os dados
-- o RabbitMQ já está disponível para o fluxo assíncrono
-- o MediatR organiza os casos de uso no backend
+- `PropostaService`: cria propostas, lista, filtra por status, altera status e expoe os tipos de seguro.
+- `ContratacaoService`: valida propostas liberadas para contratacao e registra contratacoes.
+- `front/seguro-web`: aplicacao Angular que consome as duas APIs.
+- `SQL Server`: persistencia dos dados dos servicos.
+- `RabbitMQ`: infraestrutura disponivel para evolucao do fluxo assincrono.
 
 ## Recursos Usados
 
@@ -29,21 +26,72 @@ O desenho do projeto foi pensado para uma apresentação limpa:
 
 ## O Que Existe Hoje
 
-- criação de propostas
-- listagem e filtro por status
-- alteração de status
-- cancelamento de proposta aprovada
-- contratação em outro serviço
-- combo de tipos de seguro vindo do backend
-- health checks nas duas APIs
-- Swagger nas duas APIs
-- Docker Compose com SQL Server e RabbitMQ
-- frontend Angular com telas de listagem e criação
-- fluxo desenhado em SVG/PNG em `docs/`
+- Criacao de propostas.
+- Listagem e filtro por status.
+- Alteracao de status da proposta.
+- Cancelamento de proposta aprovada.
+- Contratacao em outro servico.
+- Combo de tipos de seguro vindo do backend.
+- Health checks nas duas APIs.
+- Swagger nas duas APIs.
+- Docker Compose com SQL Server, RabbitMQ e as duas APIs.
+- Frontend Angular com telas de listagem e criacao.
+- Fluxo desenhado em SVG/PNG em `docs/`.
+
+## Estrutura Principal
+
+```text
+.
+|-- README.md
+|-- NuGet.Config
+|-- back/
+|   |-- SeguroPlataforma.sln
+|   |-- docker-compose.yml
+|   |-- .dockerignore
+|   |-- src/
+|   |   |-- BuildingBlocks/
+|   |   |   `-- Messaging/
+|   |   |       |-- IEventBus.cs
+|   |   |       `-- PropostaEvents.cs
+|   |   |-- Shared/
+|   |   |   `-- BaseComum/
+|   |   |       |-- Entity.cs
+|   |   |       `-- DomainException.cs
+|   |   |-- PropostaService/
+|   |   |   |-- PropostaService.Api/
+|   |   |   |-- PropostaService.Application/
+|   |   |   |-- PropostaService.Domain/
+|   |   |   `-- PropostaService.Infrastructure/
+|   |   `-- ContratacaoService/
+|   |       |-- ContratacaoService.Api/
+|   |       |-- ContratacaoService.Application/
+|   |       |-- ContratacaoService.Domain/
+|   |       `-- ContratacaoService.Infrastructure/
+|   `-- tests/
+|       |-- Propostas/
+|       |   `-- PropostaService.Tests/
+|       `-- Contratacao/
+|           `-- ContratacaoService.Tests/
+|-- front/
+|   `-- seguro-web/
+|       |-- angular.json
+|       |-- package.json
+|       |-- package-lock.json
+|       `-- src/
+|           `-- app/
+|               |-- models/
+|               |-- pages/
+|               |   |-- proposta-form/
+|               |   `-- propostas/
+|               `-- services/
+`-- docs/
+    |-- fluxo-plataforma-seguro.svg
+    `-- fluxo-plataforma-seguro.png
+```
 
 ## Como Rodar
 
-Subir tudo com Docker:
+Subir o backend e a infraestrutura:
 
 ```powershell
 docker compose -f back\docker-compose.yml up --build -d
@@ -56,6 +104,25 @@ cd front\seguro-web
 npm.cmd start
 ```
 
+## Como Validar
+
+Restaurar, compilar e testar o backend:
+
+```powershell
+dotnet restore back\SeguroPlataforma.sln --configfile NuGet.Config
+dotnet build back\SeguroPlataforma.sln --no-restore
+dotnet test back\SeguroPlataforma.sln --no-build
+```
+
+Compilar o front:
+
+```powershell
+cd front\seguro-web
+npm.cmd run build
+```
+
+Observacao: o projeto Angular ainda nao possui target de teste configurado no `angular.json`, entao `npm.cmd test` nao executa testes automatizados por enquanto.
+
 ## Portas
 
 - Frontend Angular: `http://localhost:4200`
@@ -64,48 +131,34 @@ npm.cmd start
 - SQL Server: `localhost:1433`
 - RabbitMQ Management: `http://localhost:15672`
 
-## Senhas E Credenciais
+## Credenciais Locais
 
 SQL Server:
 
-- usuário: `sa`
-- senha: `Seguro@12345`
+- Usuario: `sa`
+- Senha: `Seguro@12345`
 
 RabbitMQ:
 
-- usuário: `guest`
-- senha: `guest`
+- Usuario: `guest`
+- Senha: `guest`
 
-## URLs Úteis
+## URLs Uteis
 
 - Swagger propostas: `http://localhost:5001/swagger`
-- Swagger contratação: `http://localhost:5002/swagger`
+- Swagger contratacao: `http://localhost:5002/swagger`
 - Health propostas: `http://localhost:5001/health`
-- Health contratação: `http://localhost:5002/health`
+- Health contratacao: `http://localhost:5002/health`
 - Tipos de seguro: `http://localhost:5001/api/tipos-seguro`
 
 ## Fluxo
 
-1. O usuário cria a proposta no Angular
-2. O `PropostaService` grava a proposta com status `EmAnalise`
-3. O usuário aprova, rejeita ou cancela
-4. Quando aprovada, o front pode chamar o `ContratacaoService`
-5. O `ContratacaoService` registra a contratação em seu banco
-6. O usuário acompanha tudo pela interface e pelos Swagger
-
-## Estrutura Principal
-
-```text
-back/
-  src/
-    BuildingBlocks/
-    PropostaService/
-    ContratacaoService/
-  tests/
-front/
-  seguro-web/
-docs/
-```
+1. O usuario cria a proposta no Angular.
+2. O `PropostaService` grava a proposta com status `EmAnalise`.
+3. O usuario aprova, rejeita ou cancela a proposta.
+4. Quando aprovada, o front pode chamar o `ContratacaoService`.
+5. O `ContratacaoService` registra a contratacao em seu banco.
+6. O usuario acompanha o fluxo pela interface e pelos Swagger.
 
 ## Diagramas
 
@@ -114,4 +167,4 @@ docs/
 
 ## Observacao
 
-O RabbitMQ já está com painel gráfico pronto no Docker, mas o fluxo assíncrono completo entre os serviços ainda pode evoluir para publicação/consumo real com MassTransit.
+O RabbitMQ ja esta com painel grafico pronto no Docker, mas o fluxo assincrono completo entre os servicos ainda pode evoluir para publicacao e consumo real com uma biblioteca como MassTransit.
