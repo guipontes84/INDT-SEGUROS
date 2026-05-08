@@ -1,0 +1,41 @@
+<main class="page">
+  <header class="toolbar">
+    <div>
+      <h1>Nova Proposta</h1>
+      <p>Cadastre uma proposta para iniciar a analise.</p>
+    </div>
+    <a routerLink="/propostas">Voltar</a>
+  </header>
+
+  <form class="form" (ngSubmit)="salvar()">
+    <label>
+      Cliente
+      <input name="nomeCliente" [(ngModel)]="proposta.nomeCliente" autocomplete="off" required>
+    </label>
+
+    <label>
+      Documento
+      <input name="documentoCliente" [(ngModel)]="proposta.documentoCliente" autocomplete="off" required>
+    </label>
+
+    <label>
+      Tipo Seguro
+      <select name="tipoSeguro" [(ngModel)]="proposta.tipoSeguro" [disabled]="carregandoTipos" required>
+        <option value="">Selecione</option>
+        <option *ngFor="let tipo of tiposSeguro" [value]="tipo.id">{{ tipo.nome }}</option>
+      </select>
+    </label>
+
+    <label>
+      Valor
+      <input name="valorSeguro" type="number" min="0.01" step="0.01" [(ngModel)]="proposta.valorSeguro" required>
+    </label>
+
+    <p *ngIf="erro" class="error">{{ erro }}</p>
+
+    <div class="actions">
+      <a routerLink="/propostas">Cancelar</a>
+      <button type="submit" [disabled]="salvando">{{ salvando ? 'Salvando...' : 'Criar Proposta' }}</button>
+    </div>
+  </form>
+</main>

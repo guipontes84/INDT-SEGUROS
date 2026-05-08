@@ -1,0 +1,59 @@
+<main class="page">
+  <header class="toolbar">
+    <h1>Propostas</h1>
+    <div class="toolbar-actions">
+      <a routerLink="/propostas/nova">Nova Proposta</a>
+      <select [(ngModel)]="filtro" (change)="carregar()">
+        <option value="">Todos</option>
+        <option value="EmAnalise">Em Analise</option>
+        <option value="Aprovada">Aprovada</option>
+        <option value="Rejeitada">Rejeitada</option>
+        <option value="Cancelada">Cancelada</option>
+      </select>
+    </div>
+  </header>
+
+  <section class="table-wrap">
+    <p *ngIf="mensagem" class="notice success">{{ mensagem }}</p>
+    <p *ngIf="erro" class="notice error">{{ erro }}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Documento</th>
+          <th>Tipo Seguro</th>
+          <th>Valor</th>
+          <th>Status</th>
+          <th>Data Criacao</th>
+          <th>Acoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proposta of propostas">
+          <td>{{ proposta.nomeCliente }}</td>
+          <td>{{ proposta.documentoCliente }}</td>
+          <td>{{ obterTipoSeguroTexto(proposta.tipoSeguro) }}</td>
+          <td>{{ proposta.valorSeguro | currency:'BRL' }}</td>
+          <td>{{ obterStatusTexto(proposta.status) }}</td>
+          <td>{{ proposta.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td class="actions">
+            <ng-container *ngIf="podeAnalisar(proposta)">
+              <button (click)="alterarStatus(proposta, 'Aprovada')">Aprovar</button>
+              <button class="secondary" (click)="alterarStatus(proposta, 'Rejeitada')">Rejeitar</button>
+            </ng-container>
+
+            <ng-container *ngIf="podeContratar(proposta)">
+              <button (click)="contratar(proposta)">Contratar</button>
+              <button class="danger" (click)="alterarStatus(proposta, 'Cancelada')">Cancelar</button>
+            </ng-container>
+
+            <span *ngIf="estaContratada(proposta)" class="badge">Contratada</span>
+            <span *ngIf="!podeAnalisar(proposta) && !podeContratar(proposta) && !estaContratada(proposta)" class="muted">Sem acoes</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="!carregando && propostas.length === 0" class="empty">Nenhuma proposta encontrada.</p>
+    <p *ngIf="carregando" class="empty">Carregando...</p>
+  </section>
+</main>

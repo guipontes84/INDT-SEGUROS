@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040">
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}
+      .title{font:700 30px Arial, sans-serif;fill:#0f274f}
+      .subtitle{font:400 15px Arial, sans-serif;fill:#1e293b}
+      .panel{fill:#fff;stroke:#94a3b8;stroke-width:1.2}
+      .panel-title{font:700 14px Arial, sans-serif;fill:#1d4ed8}
+      .box{fill:#fff;stroke:#2563eb;stroke-width:1.2}
+      .box-green{fill:#f0fdf4;stroke:#16a34a}
+      .box-orange{fill:#fff7ed;stroke:#ea580c}
+      .box-purple{fill:#faf5ff;stroke:#7c3aed}
+      .box-red{fill:#fff1f2;stroke:#e11d48}
+      .box-teal{fill:#f0fdfa;stroke:#0f766e}
+      .h{font:700 13px Arial, sans-serif;fill:#0f172a}
+      .small{font:400 11px Arial, sans-serif;fill:#334155}
+      .tiny{font:400 10px Arial, sans-serif;fill:#475569}
+      .num{fill:#1d4ed8}
+      .numtext{font:700 15px Arial, sans-serif;fill:white}
+      .arrow{stroke:#0f172a;stroke-width:1.6;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#64748b;stroke-width:1.4;fill:none;stroke-dasharray:5 4;marker-end:url(#arrow)}
+      .line-blue{stroke:#2563eb}
+      .line-green{stroke:#16a34a}
+      .line-orange{stroke:#ea580c}
+      .line-purple{stroke:#7c3aed}
+      .icon{font:700 34px Arial, sans-serif}
+      .mono{font:400 10px Consolas, monospace;fill:#334155}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="1040"/>
+  <rect x="8" y="8" width="1584" height="1024" rx="8" fill="white" stroke="#0f274f" stroke-width="1.4"/>
+
+  <text class="title" x="28" y="42">FLUXO COMPLETO - PLATAFORMA DE SEGURO</text>
+  <text class="subtitle" x="28" y="68">Angular -> PropostaService -> SQL Server -> Status/Eventos -> ContratacaoService -> Historico e consulta via Swagger</text>
+
+  <!-- Top process -->
+  <g transform="translate(22,90)">
+    <rect class="box" x="0" y="0" width="148" height="112" rx="8"/>
+    <circle class="num" cx="25" cy="22" r="13"/><text class="numtext" x="21" y="27">1</text>
+    <text class="h" x="50" y="24">NOVA PROPOSTA</text>
+    <text class="small" x="18" y="52">Usuario informa cliente,</text>
+    <text class="small" x="18" y="68">documento, tipo de seguro</text>
+    <text class="small" x="18" y="84">e valor no Angular.</text>
+    <text class="icon" x="18" y="106" fill="#1d4ed8">+</text>
+
+    <path class="arrow" d="M148 56 L178 56"/>
+
+    <rect class="box box-green" x="178" y="0" width="148" height="112" rx="8"/>
+    <circle fill="#15803d" cx="203" cy="22" r="13"/><text class="numtext" x="199" y="27">2</text>
+    <text class="h" x="228" y="24">PERSISTE NO SQL</text>
+    <text class="small" x="196" y="52">PropostaService grava</text>
+    <text class="small" x="196" y="68">em SeguroPropostaDb</text>
+    <text class="small" x="196" y="84">com status EmAnalise.</text>
+    <text class="icon" x="196" y="107" fill="#15803d">DB</text>
+
+    <path class="arrow" d="M326 56 L356 56"/>
+
+    <rect class="box box-orange" x="356" y="0" width="148" height="112" rx="8"/>
+    <circle fill="#ea580c" cx="381" cy="22" r="13"/><text class="numtext" x="377" y="27">3</text>
+    <text class="h" x="406" y="24">ANALISE</text>
+    <text class="small" x="374" y="52">Usuario aprova ou</text>
+    <text class="small" x="374" y="68">rejeita a proposta.</text>
+    <text class="small" x="374" y="84">Status e atualizado.</text>
+    <text class="icon" x="374" y="106" fill="#ea580c">OK</text>
+
+    <path class="arrow" d="M504 56 L534 56"/>
+
+    <rect class="box box-purple" x="534" y="0" width="148" height="112" rx="8"/>
+    <circle fill="#7c3aed" cx="559" cy="22" r="13"/><text class="numtext" x="555" y="27">4</text>
+    <text class="h" x="584" y="24">EVENTO</text>
+    <text class="small" x="552" y="52">Evento de aprovacao</text>
+    <text class="small" x="552" y="68">ou rejeicao publicado.</text>
+    <text class="tiny" x="552" y="86">RabbitMQ preparado.</text>
+    <text class="icon" x="552" y="106" fill="#7c3aed">MQ</text>
+
+    <path class="arrow" d="M682 56 L712 56"/>
+
+    <rect class="box box-teal" x="712" y="0" width="148" height="112" rx="8"/>
+    <circle fill="#0f766e" cx="737" cy="22" r="13"/><text class="numtext" x="733" y="27">5</text>
+    <text class="h" x="762" y="24">RESUMO</text>
+    <text class="small" x="730" y="52">ContratacaoService</text>
+    <text class="small" x="730" y="68">mantem PropostaResumo</text>
+    <text class="small" x="730" y="84">para validar contratacao.</text>
+    <text class="icon" x="730" y="106" fill="#0f766e">R</text>
+
+    <path class="arrow" d="M860 56 L890 56"/>
+
+    <rect class="box box-green" x="890" y="0" width="148" height="112" rx="8"/>
+    <circle fill="#15803d" cx="915" cy="22" r="13"/><text class="numtext" x="911" y="27">6</text>
+    <text class="h" x="940" y="24">CONTRATACAO</text>
+    <text class="small" x="908" y="52">Somente proposta</text>
+    <text class="small" x="908" y="68">aprovada pode ser</text>
+    <text class="small" x="908" y="84">contratada.</text>
+    <text class="icon" x="908" y="106" fill="#15803d">✓</text>
+
+    <path class="arrow" d="M1038 56 L1068 56"/>
+
+    <rect class="box" x="1068" y="0" width="148" height="112" rx="8"/>
+    <circle class="num" cx="1093" cy="22" r="13"/><text class="numtext" x="1089" y="27">7</text>
+    <text class="h" x="1118" y="24">CONSULTA</text>
+    <text class="small" x="1086" y="52">Swagger e Angular</text>
+    <text class="small" x="1086" y="68">consultam dados e</text>
+    <text class="small" x="1086" y="84">historico persistido.</text>
+    <text class="icon" x="1086" y="106" fill="#1d4ed8">API</text>
+  </g>
+
+  <!-- Architecture panel -->
+  <rect class="panel" x="22" y="230" width="560" height="290" rx="8"/>
+  <text class="panel-title" x="40" y="258">VISAO GERAL DA ARQUITETURA</text>
+
+  <rect class="box" x="42" y="280" width="140" height="190" rx="8"/>
+  <text class="h" x="62" y="306">FRONTEND</text>
+  <text class="icon" x="76" y="356" fill="#1d4ed8">WEB</text>
+  <text class="small" x="62" y="388">Angular</text>
+  <text class="small" x="62" y="406">Listagem</text>
+  <text class="small" x="62" y="424">Criacao</text>
+  <text class="small" x="62" y="442">Aprovar/Rejeitar</text>
+
+  <path class="arrow line-blue" d="M182 375 L230 375"/>
+  <text class="tiny" x="190" y="364">HTTP</text>
+
+  <rect class="box box-green" x="230" y="280" width="140" height="190" rx="8"/>
+  <text class="h" x="252" y="306">PROPOSTA API</text>
+  <text class="icon" x="268" y="356" fill="#15803d">.NET</text>
+  <text class="small" x="250" y="388">/api/propostas</text>
+  <text class="small" x="250" y="406">/api/tipos-seguro</text>
+  <text class="small" x="250" y="424">/health</text>
+  <text class="small" x="250" y="442">/swagger</text>
+
+  <path class="arrow" d="M370 375 L420 375"/>
+
+  <rect class="box box-purple" x="420" y="280" width="140" height="190" rx="8"/>
+  <text class="h" x="442" y="306">CONTRATACAO</text>
+  <text class="icon" x="458" y="356" fill="#7c3aed">.NET</text>
+  <text class="small" x="440" y="388">/api/contratacoes</text>
+  <text class="small" x="440" y="406">/api/eventos</text>
+  <text class="small" x="440" y="424">/health</text>
+  <text class="small" x="440" y="442">/swagger</text>
+
+  <rect class="panel" x="22" y="542" width="560" height="210" rx="8"/>
+  <text class="panel-title" x="40" y="570">SQL SERVER - BANCOS E TABELAS</text>
+  <rect class="box box-green" x="42" y="592" width="235" height="130" rx="8"/>
+  <text class="h" x="62" y="618">SeguroPropostaDb</text>
+  <text class="small" x="62" y="642">Propostas</text>
+  <text class="small" x="62" y="660">TiposSeguro</text>
+  <text class="small" x="62" y="678">Status: EmAnalise/Aprovada/Rejeitada</text>
+  <text class="small" x="62" y="696">TipoSeguro persistido como texto</text>
+  <rect class="box box-purple" x="310" y="592" width="235" height="130" rx="8"/>
+  <text class="h" x="330" y="618">SeguroContratacaoDb</text>
+  <text class="small" x="330" y="642">Contratacoes</text>
+  <text class="small" x="330" y="660">PropostasResumo</text>
+  <text class="small" x="330" y="678">Bloqueia duplicidade</text>
+  <text class="small" x="330" y="696">Contrata apenas aprovadas</text>
+
+  <!-- Domain flow -->
+  <rect class="panel" x="610" y="230" width="430" height="522" rx="8"/>
+  <text class="panel-title" x="640" y="258">FLUXO DE NEGOCIO</text>
+  <rect class="box" x="650" y="285" width="310" height="62" rx="8"/>
+  <circle class="num" cx="675" cy="316" r="13"/><text class="numtext" x="671" y="321">1</text>
+  <text class="h" x="700" y="308">Criar proposta</text>
+  <text class="small" x="700" y="328">POST /api/propostas</text>
+  <path class="arrow" d="M805 347 L805 380"/>
+  <rect class="box box-orange" x="650" y="380" width="310" height="62" rx="8"/>
+  <circle fill="#ea580c" cx="675" cy="411" r="13"/><text class="numtext" x="671" y="416">2</text>
+  <text class="h" x="700" y="403">Em Analise</text>
+  <text class="small" x="700" y="423">Toda proposta nasce em analise</text>
+  <path class="arrow" d="M805 442 L805 475"/>
+  <rect class="box box-green" x="650" y="475" width="135" height="70" rx="8"/>
+  <text class="h" x="680" y="503">Aprovar</text>
+  <text class="small" x="672" y="524">PATCH status</text>
+  <rect class="box box-red" x="825" y="475" width="135" height="70" rx="8"/>
+  <text class="h" x="855" y="503">Rejeitar</text>
+  <text class="small" x="847" y="524">PATCH status</text>
+  <path class="arrow" d="M718 545 L718 585"/>
+  <path class="arrow" d="M892 545 L892 585"/>
+  <rect class="box box-purple" x="650" y="585" width="310" height="62" rx="8"/>
+  <circle fill="#7c3aed" cx="675" cy="616" r="13"/><text class="numtext" x="671" y="621">3</text>
+  <text class="h" x="700" y="608">Evento de proposta</text>
+  <text class="small" x="700" y="628">Aprovada ou rejeitada</text>
+  <path class="arrow" d="M805 647 L805 680"/>
+  <rect class="box box-teal" x="650" y="680" width="310" height="52" rx="8"/>
+  <text class="h" x="700" y="704">Contratacao valida PropostaResumo</text>
+  <text class="small" x="700" y="722">POST /api/contratacoes</text>
+
+  <!-- Endpoints -->
+  <rect class="panel" x="1070" y="230" width="500" height="360" rx="8"/>
+  <text class="panel-title" x="1095" y="258">ENDPOINTS PRINCIPAIS</text>
+  <rect x="1095" y="280" width="450" height="34" fill="#312e81" rx="4"/>
+  <text class="h" x="1110" y="302" fill="white">Metodo</text>
+  <text class="h" x="1190" y="302" fill="white">Endpoint</text>
+  <text class="h" x="1390" y="302" fill="white">Descricao</text>
+  <g class="small">
+    <text x="1110" y="338">POST</text><text x="1190" y="338">/api/propostas</text><text x="1390" y="338">Cria proposta</text>
+    <text x="1110" y="368">GET</text><text x="1190" y="368">/api/propostas</text><text x="1390" y="368">Lista/filtra</text>
+    <text x="1110" y="398">GET</text><text x="1190" y="398">/api/tipos-seguro</text><text x="1390" y="398">Combo</text>
+    <text x="1110" y="428">PATCH</text><text x="1190" y="428">/api/propostas/{id}/status</text><text x="1390" y="428">Aprova/rejeita</text>
+    <text x="1110" y="458">POST</text><text x="1190" y="458">/api/contratacoes</text><text x="1390" y="458">Contrata</text>
+    <text x="1110" y="488">GET</text><text x="1190" y="488">/api/contratacoes</text><text x="1390" y="488">Lista</text>
+    <text x="1110" y="518">GET</text><text x="1190" y="518">/health</text><text x="1390" y="518">Saude + banco</text>
+    <text x="1110" y="548">GET</text><text x="1190" y="548">/swagger</text><text x="1390" y="548">Documentacao</text>
+  </g>
+
+  <!-- Type list -->
+  <rect class="panel" x="1070" y="612" width="500" height="250" rx="8"/>
+  <text class="panel-title" x="1095" y="640">TIPOS DE SEGURO</text>
+  <g class="small">
+    <text x="1095" y="670">Seguro Auto</text><text x="1260" y="670">Seguro Residencial</text><text x="1430" y="670">Seguro Vida</text>
+    <text x="1095" y="698">Seguro Empresarial</text><text x="1260" y="698">Seguro Viagem</text><text x="1430" y="698">Seguro Saúde</text>
+    <text x="1095" y="726">Seguro Odontológico</text><text x="1260" y="726">Seguro Moto</text><text x="1430" y="726">Seguro Celular</text>
+    <text x="1095" y="754">Seguro Equipamentos</text><text x="1260" y="754">Seguro Patrimonial</text><text x="1430" y="754">Seguro Condomínio</text>
+    <text x="1095" y="782">Seguro Previdência</text><text x="1260" y="782">Seguro Rural</text><text x="1430" y="782">Seguro Náutico</text>
+    <text x="1095" y="810">Seguro Transporte</text><text x="1260" y="810">Responsabilidade Civil</text><text x="1430" y="810">Seguro Pet</text>
+    <text x="1095" y="838">Acidentes Pessoais</text><text x="1260" y="838">Seguro Garantia</text>
+  </g>
+
+  <!-- Bottom -->
+  <rect class="panel" x="22" y="780" width="1018" height="190" rx="8"/>
+  <text class="panel-title" x="40" y="808">CONFIGURACAO E EXECUCAO</text>
+  <text class="h" x="42" y="838">Docker Compose</text>
+  <text class="mono" x="42" y="860">docker compose -f back\docker-compose.yml up --build -d</text>
+  <text class="h" x="42" y="895">SQL Server</text>
+  <text class="small" x="42" y="916">Host interno: sqlserver | Usuario: sa | Senha: Seguro@12345</text>
+  <text class="h" x="42" y="948">RabbitMQ</text>
+  <text class="small" x="42" y="969">Host interno: rabbitmq | Painel: http://localhost:15672 | guest / guest</text>
+
+  <rect class="panel" x="1070" y="885" width="500" height="85" rx="8"/>
+  <text class="panel-title" x="1095" y="913">LEGENDA</text>
+  <line x1="1095" y1="932" x2="1140" y2="932" class="arrow line-blue"/>
+  <text class="small" x="1150" y="936">Chamada HTTP</text>
+  <line x1="1280" y1="932" x2="1325" y2="932" class="arrow line-purple"/>
+  <text class="small" x="1335" y="936">Evento/Mensageria</text>
+  <line x1="1095" y1="955" x2="1140" y2="955" class="arrow line-green"/>
+  <text class="small" x="1150" y="959">Persistencia SQL</text>
+  <line x1="1280" y1="955" x2="1325" y2="955" class="dash"/>
+  <text class="small" x="1335" y="959">Evolucao planejada</text>
+</svg>

@@ -1,0 +1,74 @@
+.page {
+  padding: 32px;
+}
+
+.toolbar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  margin: 0 0 4px;
+}
+
+p {
+  color: #64748b;
+  margin: 0;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: grid;
+  gap: 18px;
+  max-width: 640px;
+  padding: 24px;
+}
+
+label {
+  color: #334155;
+  display: grid;
+  font-weight: 700;
+  gap: 8px;
+}
+
+input,
+select {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+button {
+  background: #2563eb;
+  border: 0;
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 10px 14px;
+}
+
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
