@@ -10,12 +10,13 @@ public sealed record CriarPropostaRequest(
 
 public sealed record AlterarStatusPropostaRequest(PropostaStatus Status);
 
-public sealed record TipoSeguroResponse(TipoSeguro Id, string Nome);
+public sealed record TipoSeguroResponse(Guid Uuid, TipoSeguro Id, string Chave, string Nome);
 
 public sealed record PropostaResponse(
     Guid Id,
     string NomeCliente,
     string DocumentoCliente,
+    Guid TipoSeguroId,
     TipoSeguro TipoSeguro,
     decimal ValorSeguro,
     PropostaStatus Status,
@@ -28,6 +29,7 @@ public sealed record PropostaResponse(
             proposta.Id,
             proposta.NomeCliente,
             proposta.DocumentoCliente,
+            proposta.TipoSeguroId,
             proposta.TipoSeguro,
             proposta.ValorSeguro,
             proposta.Status,

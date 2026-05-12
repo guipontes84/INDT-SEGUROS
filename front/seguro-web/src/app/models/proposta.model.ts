@@ -1,4 +1,4 @@
-export type PropostaStatus = 'EmAnalise' | 'Aprovada' | 'Rejeitada' | 'Cancelada';
+export type PropostaStatus = 'EmAnalise' | 'Aprovada' | 'Rejeitada' | 'Cancelada' | 'AguardandoContratacao' | 'Contratado';
 export type TipoSeguro =
   | 'Auto'
   | 'Residencial'

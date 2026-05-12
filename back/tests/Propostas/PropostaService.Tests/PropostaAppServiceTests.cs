@@ -11,8 +11,8 @@ public sealed class PropostaAppServiceTests
     public async Task CriarAsync_DevePersistirEPublicarEvento()
     {
         var repository = new InMemoryPropostaRepository();
-        var eventBus = new InMemoryEventBus();
-        var service = new PropostaAppService(repository, eventBus);
+        var eventPublisher = new InMemoryPropostaEventPublisher();
+        var service = new PropostaAppService(repository, eventPublisher);
 
         var response = await service.CriarAsync(new CriarPropostaRequest("Ana", "123", TipoSeguro.Auto, 1500));
 
@@ -20,15 +20,15 @@ public sealed class PropostaAppServiceTests
 
         Assert.NotNull(persisted);
         Assert.Equal(PropostaStatus.EmAnalise, response.Status);
-        Assert.Single(eventBus.PublishedEvents);
-        Assert.IsType<PropostaCriadaEvent>(eventBus.PublishedEvents[0]);
+        Assert.Single(eventPublisher.PublishedEvents);
+        Assert.IsType<PropostaCriadaEvent>(eventPublisher.PublishedEvents[0]);
     }
 
     [Fact]
     public async Task ListarAsync_DeveFiltrarPorStatus()
     {
         var repository = new InMemoryPropostaRepository();
-        var service = new PropostaAppService(repository, new InMemoryEventBus());
+        var service = new PropostaAppService(repository, new InMemoryPropostaEventPublisher());
 
         var primeira = new Proposta("Ana", "123", TipoSeguro.Auto, 1500);
         var segunda = new Proposta("Bruno", "456", TipoSeguro.Vida, 2500);
@@ -36,16 +36,16 @@ public sealed class PropostaAppServiceTests
         await repository.AddAsync(primeira);
         await repository.AddAsync(segunda);
 
-        var propostas = await service.ListarAsync(PropostaStatus.Aprovada);
+        var propostas = await service.ListarAsync(PropostaStatus.AguardandoContratacao);
 
         Assert.Single(propostas);
-        Assert.Equal(PropostaStatus.Aprovada, propostas.First().Status);
+        Assert.Equal(PropostaStatus.AguardandoContratacao, propostas.First().Status);
     }
 
     [Fact]
     public async Task BuscarAsync_DeveRetornarNullQuandoNaoEncontrar()
     {
-        var service = new PropostaAppService(new InMemoryPropostaRepository(), new InMemoryEventBus());
+        var service = new PropostaAppService(new InMemoryPropostaRepository(), new InMemoryPropostaEventPublisher());
 
         var response = await service.BuscarAsync(Guid.NewGuid());
 
@@ -59,16 +59,20 @@ public sealed class PropostaAppServiceTests
     public async Task AlterarStatusAsync_DevePublicarEventoCorreto(PropostaStatus novoStatus, Type eventType)
     {
         var repository = new InMemoryPropostaRepository();
-        var eventBus = new InMemoryEventBus();
-        var service = new PropostaAppService(repository, eventBus);
+        var eventPublisher = new InMemoryPropostaEventPublisher();
+        var service = new PropostaAppService(repository, eventPublisher);
         var proposta = new Proposta("Ana", "123", TipoSeguro.Auto, 1500);
         await repository.AddAsync(proposta);
 
         var response = await service.AlterarStatusAsync(proposta.Id, new AlterarStatusPropostaRequest(novoStatus));
 
         Assert.NotNull(response);
-        Assert.Equal(novoStatus, response!.Status);
-        Assert.Single(eventBus.PublishedEvents);
-        Assert.IsType(eventType, eventBus.PublishedEvents[0]);
+        var statusEsperado = novoStatus == PropostaStatus.Aprovada
+            ? PropostaStatus.AguardandoContratacao
+            : novoStatus;
+
+        Assert.Equal(statusEsperado, response!.Status);
+        Assert.Single(eventPublisher.PublishedEvents);
+        Assert.IsType(eventType, eventPublisher.PublishedEvents[0]);
     }
 }

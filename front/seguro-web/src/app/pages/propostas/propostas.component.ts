@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { Proposta, PropostaStatus, TipoSeguro } from '../../models/proposta.model';
 import { ContratacaoService } from '../../services/contratacao.service';
 import { PropostaService } from '../../services/proposta.service';
@@ -40,7 +40,11 @@ export class PropostasComponent implements OnInit {
 
     forkJoin({
       propostas: this.propostaService.listar(this.filtro || undefined),
-      contratacoes: this.contratacaoService.listar()
+      contratacoes: this.contratacaoService.listar().pipe(
+        catchError(() => {
+          return of([]);
+        })
+      )
     }).subscribe({
       next: ({ propostas, contratacoes }) => {
         this.propostas = propostas;
@@ -83,15 +87,19 @@ export class PropostasComponent implements OnInit {
   }
 
   podeContratar(proposta: Proposta): boolean {
-    return proposta.status === 'Aprovada' && !this.propostasContratadas.has(proposta.id);
+    return false;
   }
 
   podeCancelar(proposta: Proposta): boolean {
-    return proposta.status === 'Aprovada' && !this.propostasContratadas.has(proposta.id);
+    return false;
+  }
+
+  aguardandoContratacao(proposta: Proposta): boolean {
+    return proposta.status === 'AguardandoContratacao' && !this.estaContratada(proposta);
   }
 
   estaContratada(proposta: Proposta): boolean {
-    return this.propostasContratadas.has(proposta.id);
+    return proposta.status === 'Contratado' || this.propostasContratadas.has(proposta.id);
   }
 
   obterStatusTexto(status: PropostaStatus): string {
@@ -99,7 +107,9 @@ export class PropostasComponent implements OnInit {
       EmAnalise: 'Em Analise',
       Aprovada: 'Aprovada',
       Rejeitada: 'Rejeitada',
-      Cancelada: 'Cancelada'
+      Cancelada: 'Cancelada',
+      AguardandoContratacao: 'Aguardando Contratacao',
+      Contratado: 'Contratado'
     };
 
     return textos[status];

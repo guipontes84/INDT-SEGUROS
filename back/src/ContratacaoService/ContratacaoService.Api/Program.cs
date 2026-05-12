@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 using MediatR;
 using ContratacaoService.Application;
+using ContratacaoService.Application.UseCases.Contratacoes;
 using ContratacaoService.Infrastructure;
-using Messaging;
 using BaseComum;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -71,26 +71,6 @@ contratacoes.MapGet("/{id:guid}", async (Guid id, IMediator mediator, Cancellati
 {
     var response = await mediator.Send(new BuscarContratacaoPorIdQuery(id), cancellationToken);
     return response is null ? Results.NotFound() : Results.Ok(response);
-});
-
-var eventos = app.MapGroup("/api/eventos/propostas");
-
-eventos.MapPost("/aprovada", async (PropostaAprovadaEvent evento, IMediator mediator, CancellationToken cancellationToken) =>
-{
-    await mediator.Send(new AplicarPropostaAprovadaCommand(evento.PropostaId, evento.Status, evento.DataAtualizacao), cancellationToken);
-    return Results.Accepted();
-});
-
-eventos.MapPost("/rejeitada", async (PropostaRejeitadaEvent evento, IMediator mediator, CancellationToken cancellationToken) =>
-{
-    await mediator.Send(new AplicarPropostaRejeitadaCommand(evento.PropostaId, evento.Status, evento.DataAtualizacao), cancellationToken);
-    return Results.Accepted();
-});
-
-eventos.MapPost("/cancelada", async (PropostaCanceladaEvent evento, IMediator mediator, CancellationToken cancellationToken) =>
-{
-    await mediator.Send(new AplicarPropostaCanceladaCommand(evento.PropostaId, evento.Status, evento.DataAtualizacao), cancellationToken);
-    return Results.Accepted();
 });
 
 app.Run();

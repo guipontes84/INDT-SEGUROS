@@ -11,13 +11,13 @@ public sealed class ContratacaoInfrastructureTests
         var repository = new InMemoryPropostaResumoRepository();
         var propostaId = Guid.NewGuid();
 
-        await repository.UpsertAsync(new PropostaResumo(propostaId, "Aprovada", DateTime.UtcNow));
-        await repository.UpsertAsync(new PropostaResumo(propostaId, "Cancelada", DateTime.UtcNow.AddMinutes(1)));
+        await repository.UpsertAsync(new PropostaResumo(propostaId, PropostaResumoStatus.Aprovada, DateTime.UtcNow));
+        await repository.UpsertAsync(new PropostaResumo(propostaId, PropostaResumoStatus.Cancelada, DateTime.UtcNow.AddMinutes(1)));
 
         var response = await repository.GetByPropostaIdAsync(propostaId);
 
         Assert.NotNull(response);
-        Assert.Equal("Cancelada", response!.Status);
+        Assert.Equal(PropostaResumoStatus.Cancelada, response!.Status);
     }
 
     [Fact]

@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using MediatR;
 using PropostaService.Application;
+using PropostaService.Application.UseCases.Propostas;
+using PropostaService.Application.UseCases.TiposSeguro;
 using PropostaService.Domain;
 using PropostaService.Infrastructure;
 using BaseComum;

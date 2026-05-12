@@ -1,9 +1,9 @@
-using Messaging;
+using PropostaService.Application.Ports.Out;
 using PropostaService.Domain;
 
 namespace PropostaService.Application;
 
-public sealed class PropostaAppService(IPropostaRepository repository, IEventBus eventBus)
+public sealed class PropostaAppService(IPropostaRepository repository, IPropostaEventPublisher eventPublisher)
 {
     public async Task<PropostaResponse> CriarAsync(CriarPropostaRequest request, CancellationToken cancellationToken = default)
     {
@@ -14,7 +14,7 @@ public sealed class PropostaAppService(IPropostaRepository repository, IEventBus
             request.ValorSeguro);
 
         await repository.AddAsync(proposta, cancellationToken);
-        await eventBus.PublishAsync(new PropostaCriadaEvent(proposta.Id, proposta.Status.ToString(), proposta.DataAtualizacao), cancellationToken);
+        await eventPublisher.PublicarPropostaCriadaAsync(proposta, cancellationToken);
 
         return PropostaResponse.From(proposta);
     }
@@ -42,18 +42,17 @@ public sealed class PropostaAppService(IPropostaRepository repository, IEventBus
         proposta.AlterarStatus(request.Status);
         await repository.UpdateAsync(proposta, cancellationToken);
 
-        var status = proposta.Status.ToString();
-        if (proposta.Status == PropostaStatus.Aprovada)
+        if (proposta.Status == PropostaStatus.AguardandoContratacao)
         {
-            await eventBus.PublishAsync(new PropostaAprovadaEvent(proposta.Id, status, proposta.DataAtualizacao), cancellationToken);
+            await eventPublisher.PublicarPropostaAprovadaAsync(proposta, cancellationToken);
         }
         else if (proposta.Status == PropostaStatus.Rejeitada)
         {
-            await eventBus.PublishAsync(new PropostaRejeitadaEvent(proposta.Id, status, proposta.DataAtualizacao), cancellationToken);
+            await eventPublisher.PublicarPropostaRejeitadaAsync(proposta, cancellationToken);
         }
         else
         {
-            await eventBus.PublishAsync(new PropostaCanceladaEvent(proposta.Id, status, proposta.DataAtualizacao), cancellationToken);
+            await eventPublisher.PublicarPropostaCanceladaAsync(proposta, cancellationToken);
         }
 
         return PropostaResponse.From(proposta);

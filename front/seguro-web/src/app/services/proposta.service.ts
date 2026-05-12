@@ -63,6 +63,12 @@ export class PropostaService {
       case 4:
       case 'Cancelada':
         return 'Cancelada';
+      case 5:
+      case 'AguardandoContratacao':
+        return 'AguardandoContratacao';
+      case 6:
+      case 'Contratado':
+        return 'Contratado';
       default:
         return 'EmAnalise';
     }

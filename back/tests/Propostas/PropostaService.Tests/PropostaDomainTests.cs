@@ -39,19 +39,34 @@ public sealed class PropostaDomainTests
 
         proposta.AlterarStatus(novoStatus);
 
-        Assert.Equal(novoStatus, proposta.Status);
+        var statusEsperado = novoStatus == PropostaStatus.Aprovada
+            ? PropostaStatus.AguardandoContratacao
+            : novoStatus;
+
+        Assert.Equal(statusEsperado, proposta.Status);
         Assert.True(proposta.DataAtualizacao >= proposta.DataCriacao);
     }
 
     [Fact]
-    public void AlterarStatus_Aprovada_DevePermitirSomenteCancelada()
+    public void AlterarStatus_AguardandoContratacao_DevePermitirSomenteCanceladaOuContratada()
     {
         var proposta = new Proposta("Ana", "123", TipoSeguro.Auto, 1500);
         proposta.AlterarStatus(PropostaStatus.Aprovada);
 
         var exception = Assert.Throws<DomainException>(() => proposta.AlterarStatus(PropostaStatus.Rejeitada));
 
-        Assert.Equal("Propostas aprovadas somente podem ser canceladas.", exception.Message);
+        Assert.Equal("Propostas aguardando contratacao somente podem ser canceladas ou contratadas.", exception.Message);
+    }
+
+    [Fact]
+    public void AlterarStatus_AguardandoContratacao_DevePermitirContratada()
+    {
+        var proposta = new Proposta("Ana", "123", TipoSeguro.Auto, 1500);
+        proposta.AlterarStatus(PropostaStatus.Aprovada);
+
+        proposta.AlterarStatus(PropostaStatus.Contratado);
+
+        Assert.Equal(PropostaStatus.Contratado, proposta.Status);
     }
 
     [Fact]
@@ -62,7 +77,7 @@ public sealed class PropostaDomainTests
 
         var exception = Assert.Throws<DomainException>(() => proposta.AlterarStatus(PropostaStatus.Cancelada));
 
-        Assert.Equal("Propostas rejeitadas ou canceladas nao podem ter o status alterado.", exception.Message);
+        Assert.Equal("Propostas rejeitadas, canceladas ou contratadas nao podem ter o status alterado.", exception.Message);
     }
 
     [Fact]
@@ -73,6 +88,6 @@ public sealed class PropostaDomainTests
 
         var exception = Assert.Throws<DomainException>(() => proposta.AlterarStatus(PropostaStatus.Aprovada));
 
-        Assert.Equal("Propostas rejeitadas ou canceladas nao podem ter o status alterado.", exception.Message);
+        Assert.Equal("Propostas rejeitadas, canceladas ou contratadas nao podem ter o status alterado.", exception.Message);
     }
 }

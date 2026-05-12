@@ -1,0 +1,340 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1280" viewBox="0 0 1800 1280">
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.frame{fill:#fff;stroke:#0f274f;stroke-width:1.5}
+      .title{font:700 34px Arial,sans-serif;fill:#0f274f}.subtitle{font:400 16px Arial,sans-serif;fill:#334155}
+      .section{font:700 15px Arial,sans-serif;fill:#1d4ed8}.h{font:700 13px Arial,sans-serif;fill:#0f172a}
+      .step-title{font:700 12px Arial,sans-serif;fill:#0f172a}.small{font:400 11px Arial,sans-serif;fill:#334155}
+      .tiny{font:400 10px Arial,sans-serif;fill:#475569}.mono{font:400 10px Consolas,monospace;fill:#334155}
+      .numtext{font:700 15px Arial,sans-serif;fill:#fff}.panel{fill:#fff;stroke:#94a3b8;stroke-width:1.15}
+      .panel-blue{fill:#fff;stroke:#2563eb;stroke-width:1.35}.panel-green{fill:#fff;stroke:#16a34a;stroke-width:1.25}
+      .panel-purple{fill:#fff;stroke:#7c3aed;stroke-width:1.25}.panel-orange{fill:#fff;stroke:#ea580c;stroke-width:1.25}
+      .box{fill:#fff;stroke:#64748b;stroke-width:1.05}.box-blue{fill:#eff6ff;stroke:#2563eb}.box-green{fill:#f0fdf4;stroke:#16a34a}
+      .box-orange{fill:#fff7ed;stroke:#ea580c}.box-purple{fill:#faf5ff;stroke:#7c3aed}.box-teal{fill:#f0fdfa;stroke:#0f766e}
+      .box-red{fill:#fff1f2;stroke:#e11d48}.box-gray{fill:#f8fafc;stroke:#64748b}.box-yellow{fill:#fefce8;stroke:#ca8a04}
+      .arrow{stroke:#0f172a;stroke-width:1.5;fill:none;marker-end:url(#arrow)}.arrow-blue{stroke:#2563eb}.arrow-green{stroke:#16a34a}
+      .arrow-purple{stroke:#7c3aed}.arrow-orange{stroke:#ea580c}.dash{stroke:#64748b;stroke-width:1.3;fill:none;stroke-dasharray:6 5;marker-end:url(#arrow)}
+      .dash-purple{stroke:#7c3aed;stroke-width:1.4;fill:none;stroke-dasharray:6 5;marker-end:url(#arrowPurple)}
+      .divider{stroke:#cbd5e1;stroke-width:1}.badge{font:700 10px Arial,sans-serif;fill:#fff}.icon{font:700 24px Arial,sans-serif}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#0f172a"/>
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1800" height="1280"/>
+  <rect class="frame" x="8" y="8" width="1784" height="1264" rx="10"/>
+
+  <text class="title" x="32" y="45">FLUXO SISTEMATICO - PLATAFORMA DE SEGUROS</text>
+  <text class="subtitle" x="32" y="70">Proposta -> RabbitMQ -> Contratacao -> RabbitMQ callback -> Proposta | Angular + APIs .NET + SQL Server + RabbitMQ</text>
+
+  <!-- FLUXO SUPERIOR -->
+  <g id="fluxo-principal" transform="translate(24,92)">
+    <g>
+      <rect class="box box-blue" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#1d4ed8"/><text class="numtext" x="24" y="29" text-anchor="middle">1</text>
+      <text class="step-title" x="50" y="28">NOVA PROPOSTA</text>
+      <text class="tiny" x="18" y="54">Angular envia dados do cliente,</text>
+      <text class="tiny" x="18" y="67">tipo de seguro e valor.</text>
+      <text class="tiny" x="18" y="84">POST /api/propostas.</text>
+      <text class="icon" x="18" y="106" fill="#1d4ed8">WEB</text>
+    </g>
+    <path class="arrow" d="M156 56 L171 56"/>
+    <g transform="translate(174,0)">
+      <rect class="box box-green" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#15803d"/><text class="numtext" x="24" y="29" text-anchor="middle">2</text>
+      <text class="step-title" x="50" y="28">EM ANALISE</text>
+      <text class="tiny" x="18" y="54">PropostaService grava no</text>
+      <text class="tiny" x="18" y="67">SeguroPropostaDb.</text>
+      <text class="tiny" x="18" y="84">Status inicial: EmAnalise.</text>
+      <text class="icon" x="18" y="106" fill="#15803d">SQL</text>
+    </g>
+    <path class="arrow" d="M330 56 L345 56"/>
+    <g transform="translate(348,0)">
+      <rect class="box box-orange" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#ea580c"/><text class="numtext" x="24" y="29" text-anchor="middle">3</text>
+      <text class="step-title" x="50" y="28">APROVACAO</text>
+      <text class="tiny" x="18" y="54">Usuario clica Aprovar.</text>
+      <text class="tiny" x="18" y="67">PATCH /status recebe</text>
+      <text class="tiny" x="18" y="80">Aprovada como comando.</text>
+      <text class="icon" x="18" y="106" fill="#ea580c">OK</text>
+    </g>
+    <path class="arrow" d="M504 56 L519 56"/>
+    <g transform="translate(522,0)">
+      <rect class="box box-yellow" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#ca8a04"/><text class="numtext" x="24" y="29" text-anchor="middle">4</text>
+      <text class="step-title" x="50" y="28">AGUARDANDO</text>
+      <text class="tiny" x="18" y="54">Dominio persiste status</text>
+      <text class="tiny" x="18" y="67">AguardandoContratacao.</text>
+      <text class="tiny" x="18" y="84">UI fica sem acoes.</text>
+      <text class="icon" x="18" y="106" fill="#ca8a04">WAIT</text>
+    </g>
+    <path class="arrow" d="M678 56 L693 56"/>
+    <g transform="translate(696,0)">
+      <rect class="box box-purple" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#7c3aed"/><text class="numtext" x="24" y="29" text-anchor="middle">5</text>
+      <text class="step-title" x="50" y="28">EVENTO 1</text>
+      <text class="tiny" x="18" y="54">Publica PropostaAprovada</text>
+      <text class="tiny" x="18" y="67">no RabbitMQ.</text>
+      <text class="tiny" x="18" y="84">Routing: proposta.aprovada.</text>
+      <text class="icon" x="18" y="106" fill="#7c3aed">MQ</text>
+    </g>
+    <path class="arrow" d="M852 56 L867 56"/>
+    <g transform="translate(870,0)">
+      <rect class="box box-teal" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#0f766e"/><text class="numtext" x="24" y="29" text-anchor="middle">6</text>
+      <text class="step-title" x="50" y="28">CONSUMER</text>
+      <text class="tiny" x="18" y="54">ContratacaoService le fila</text>
+      <text class="tiny" x="18" y="67">seguro.contratacao.</text>
+      <text class="tiny" x="18" y="84">Se off, Rabbit segura.</text>
+      <text class="icon" x="18" y="106" fill="#0f766e">RUN</text>
+    </g>
+    <path class="arrow" d="M1026 56 L1041 56"/>
+    <g transform="translate(1044,0)">
+      <rect class="box box-green" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#15803d"/><text class="numtext" x="24" y="29" text-anchor="middle">7</text>
+      <text class="step-title" x="50" y="28">CONTRATA</text>
+      <text class="tiny" x="18" y="54">Cria Contratacao.</text>
+      <text class="tiny" x="18" y="67">Grava SeguroContratacaoDb.</text>
+      <text class="tiny" x="18" y="84">Operacao idempotente.</text>
+      <text class="icon" x="18" y="106" fill="#15803d">SQL</text>
+    </g>
+    <path class="arrow" d="M1200 56 L1215 56"/>
+    <g transform="translate(1218,0)">
+      <rect class="box box-purple" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#7c3aed"/><text class="numtext" x="24" y="29" text-anchor="middle">8</text>
+      <text class="step-title" x="50" y="28">EVENTO 2</text>
+      <text class="tiny" x="18" y="54">Publica callback</text>
+      <text class="tiny" x="18" y="67">PropostaContratadaEvent.</text>
+      <text class="tiny" x="18" y="84">Routing: proposta.contratada.</text>
+      <text class="icon" x="18" y="106" fill="#7c3aed">MQ</text>
+    </g>
+    <path class="arrow" d="M1374 56 L1389 56"/>
+    <g transform="translate(1392,0)">
+      <rect class="box box-teal" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#0f766e"/><text class="numtext" x="24" y="29" text-anchor="middle">9</text>
+      <text class="step-title" x="50" y="28">CALLBACK</text>
+      <text class="tiny" x="18" y="54">PropostaService consome</text>
+      <text class="tiny" x="18" y="67">fila seguro.proposta.</text>
+      <text class="tiny" x="18" y="84">Atualiza status.</text>
+      <text class="icon" x="18" y="106" fill="#0f766e">SYNC</text>
+    </g>
+    <path class="arrow" d="M1548 56 L1563 56"/>
+    <g transform="translate(1566,0)">
+      <rect class="box box-blue" x="0" y="0" width="156" height="112" rx="9"/>
+      <circle cx="24" cy="24" r="14" fill="#1d4ed8"/><text class="numtext" x="24" y="29" text-anchor="middle">10</text>
+      <text class="step-title" x="50" y="28">CONTRATADO</text>
+      <text class="tiny" x="18" y="54">Proposta finalizada.</text>
+      <text class="tiny" x="18" y="67">UI mostra badge</text>
+      <text class="tiny" x="18" y="80">Contratada.</text>
+      <text class="icon" x="18" y="106" fill="#1d4ed8">DONE</text>
+    </g>
+  </g>
+
+  <!-- ARQUITETURA -->
+  <rect class="panel-blue" x="24" y="230" width="640" height="390" rx="10"/>
+  <text class="section" x="46" y="258">VISAO GERAL DA ARQUITETURA</text>
+
+  <rect class="box box-blue" x="46" y="285" width="150" height="145" rx="8"/>
+  <text class="h" x="60" y="307">Angular Frontend</text>
+  <circle cx="62" cy="332" r="2.4" fill="#334155"/><text class="small" x="72" y="336">Lista e filtra propostas.</text>
+  <circle cx="62" cy="350" r="2.4" fill="#334155"/><text class="small" x="72" y="354">Cria proposta.</text>
+  <circle cx="62" cy="368" r="2.4" fill="#334155"/><text class="small" x="72" y="372">Aprova/Rejeita/Cancela.</text>
+  <circle cx="62" cy="386" r="2.4" fill="#334155"/><text class="small" x="72" y="390">Nao mostra erro se</text>
+  <text class="small" x="72" y="404">contratacao estiver off.</text>
+
+  <rect class="box box-green" x="236" y="285" width="170" height="145" rx="8"/>
+  <text class="h" x="250" y="307">PropostaService API</text>
+  <circle cx="252" cy="332" r="2.4" fill="#334155"/><text class="small" x="262" y="336">Endpoints de proposta.</text>
+  <circle cx="252" cy="350" r="2.4" fill="#334155"/><text class="small" x="262" y="354">Regra de status.</text>
+  <circle cx="252" cy="368" r="2.4" fill="#334155"/><text class="small" x="262" y="372">Publisher RabbitMQ.</text>
+  <circle cx="252" cy="386" r="2.4" fill="#334155"/><text class="small" x="262" y="390">Consumer de callback.</text>
+
+  <rect class="box box-purple" x="454" y="285" width="170" height="145" rx="8"/>
+  <text class="h" x="468" y="307">RabbitMQ</text>
+  <circle cx="470" cy="332" r="2.4" fill="#334155"/><text class="small" x="480" y="336">seguro.propostas.</text>
+  <circle cx="470" cy="350" r="2.4" fill="#334155"/><text class="small" x="480" y="354">seguro.contratacoes.</text>
+  <circle cx="470" cy="368" r="2.4" fill="#334155"/><text class="small" x="480" y="372">Filas duraveis.</text>
+  <circle cx="470" cy="386" r="2.4" fill="#334155"/><text class="small" x="480" y="390">Mensagens persistentes.</text>
+
+  <rect class="box box-green" x="46" y="468" width="150" height="145" rx="8"/>
+  <text class="h" x="60" y="490">SQL Proposta</text>
+  <circle cx="62" cy="515" r="2.4" fill="#334155"/><text class="small" x="72" y="519">Propostas.</text>
+  <circle cx="62" cy="533" r="2.4" fill="#334155"/><text class="small" x="72" y="537">TiposSeguro.</text>
+  <circle cx="62" cy="551" r="2.4" fill="#334155"/><text class="small" x="72" y="555">Status de negocio.</text>
+  <circle cx="62" cy="569" r="2.4" fill="#334155"/><text class="small" x="72" y="573">Datas de criacao/update.</text>
+
+  <rect class="box box-teal" x="236" y="468" width="170" height="145" rx="8"/>
+  <text class="h" x="250" y="490">ContratacaoService</text>
+  <circle cx="252" cy="515" r="2.4" fill="#334155"/><text class="small" x="262" y="519">Consumer de propostas.</text>
+  <circle cx="252" cy="533" r="2.4" fill="#334155"/><text class="small" x="262" y="537">Cria contratacao.</text>
+  <circle cx="252" cy="551" r="2.4" fill="#334155"/><text class="small" x="262" y="555">Publisher de callback.</text>
+  <circle cx="252" cy="569" r="2.4" fill="#334155"/><text class="small" x="262" y="573">Endpoints de consulta.</text>
+
+  <rect class="box box-green" x="454" y="468" width="170" height="145" rx="8"/>
+  <text class="h" x="468" y="490">SQL Contratacao</text>
+  <circle cx="470" cy="515" r="2.4" fill="#334155"/><text class="small" x="480" y="519">Contratacoes.</text>
+  <circle cx="470" cy="533" r="2.4" fill="#334155"/><text class="small" x="480" y="537">PropostasResumo.</text>
+  <circle cx="470" cy="551" r="2.4" fill="#334155"/><text class="small" x="480" y="555">Indice por PropostaId.</text>
+  <circle cx="470" cy="569" r="2.4" fill="#334155"/><text class="small" x="480" y="573">Base propria do servico.</text>
+
+  <path class="arrow" d="M196 350 L236 350"/>
+  <path class="arrow-purple" d="M406 350 L454 350"/>
+  <path class="arrow-purple" d="M539 430 L539 468"/>
+  <path class="arrow" d="M454 540 L406 540"/>
+  <path class="arrow" d="M236 540 L196 540"/>
+  <path class="arrow-green" d="M321 430 L321 468"/>
+  <path class="arrow-green" d="M121 468 L121 430"/>
+  <text class="tiny" x="46" y="642">Cada servico possui seu proprio banco. Sincronizacao entre dominios ocorre por eventos, nao por acesso direto entre bancos.</text>
+
+  <!-- COREOGRAFIA -->
+  <rect class="panel-purple" x="690" y="230" width="560" height="390" rx="10"/>
+  <text class="section" x="712" y="258">COREOGRAFIA RABBITMQ - DOIS EVENTOS</text>
+
+  <rect class="box box-purple" x="715" y="285" width="235" height="145" rx="8"/>
+  <text class="h" x="730" y="307">Evento 1: PropostaAprovadaEvent</text>
+  <text class="small" x="730" y="332">Origem: PropostaService.</text>
+  <text class="small" x="730" y="350">Exchange: seguro.propostas.</text>
+  <text class="small" x="730" y="368">Routing key: proposta.aprovada.</text>
+  <text class="small" x="730" y="386">Fila: seguro.contratacao.propostas.</text>
+  <text class="small" x="730" y="404">Status: AguardandoContratacao.</text>
+
+  <rect class="box box-teal" x="990" y="285" width="235" height="145" rx="8"/>
+  <text class="h" x="1005" y="307">Consumer de Contratacao</text>
+  <text class="small" x="1005" y="332">Recebe evento 1.</text>
+  <text class="small" x="1005" y="350">Upsert em PropostasResumo.</text>
+  <text class="small" x="1005" y="368">Cria Contratacao se nao existir.</text>
+  <text class="small" x="1005" y="386">Se ja existe, nao duplica.</text>
+  <text class="small" x="1005" y="404">Publica callback.</text>
+  <path class="arrow-purple" d="M950 358 L990 358"/>
+
+  <rect class="box box-green" x="715" y="468" width="235" height="145" rx="8"/>
+  <text class="h" x="730" y="490">Consumer de Proposta</text>
+  <text class="small" x="730" y="515">Recebe evento 2.</text>
+  <text class="small" x="730" y="533">Busca proposta por Id.</text>
+  <text class="small" x="730" y="551">Se nao esta Contratado, altera.</text>
+  <text class="small" x="730" y="569">Status final: Contratado.</text>
+  <text class="small" x="730" y="587">Reprocessamento idempotente.</text>
+
+  <rect class="box box-purple" x="990" y="468" width="235" height="145" rx="8"/>
+  <text class="h" x="1005" y="490">Evento 2: PropostaContratadaEvent</text>
+  <text class="small" x="1005" y="515">Origem: ContratacaoService.</text>
+  <text class="small" x="1005" y="533">Exchange: seguro.contratacoes.</text>
+  <text class="small" x="1005" y="551">Routing key: proposta.contratada.</text>
+  <text class="small" x="1005" y="569">Fila: seguro.proposta.contratacoes.</text>
+  <text class="small" x="1005" y="587">Inclui PropostaId e ContratacaoId.</text>
+  <path class="arrow-purple" d="M990 540 L950 540"/>
+  <path class="dash-purple" d="M1108 430 L1108 468"/>
+  <path class="dash-purple" d="M832 468 L832 430"/>
+  <text class="tiny" x="718" y="642">Se ContratacaoService estiver offline, evento 1 permanece na fila. Ao subir, o consumer processa e publica o evento 2.</text>
+
+  <!-- ESTADOS -->
+  <rect class="panel-green" x="1275" y="230" width="500" height="390" rx="10"/>
+  <text class="section" x="1298" y="258">MAQUINA DE ESTADOS DA PROPOSTA</text>
+  <rect class="box box-blue" x="1300" y="285" width="140" height="90" rx="8"/>
+  <text class="h" x="1314" y="307">EmAnalise</text>
+  <text class="small" x="1314" y="332">Criada e aguardando</text><text class="small" x="1314" y="348">decisao do usuario.</text>
+  <rect class="box box-yellow" x="1485" y="285" width="150" height="90" rx="8"/>
+  <text class="h" x="1499" y="307">AguardandoContratacao</text>
+  <text class="small" x="1499" y="332">Apos aprovar.</text><text class="small" x="1499" y="348">Sem botoes na UI.</text>
+  <rect class="box box-green" x="1300" y="425" width="140" height="90" rx="8"/>
+  <text class="h" x="1314" y="447">Contratado</text>
+  <text class="small" x="1314" y="472">Final via callback.</text><text class="small" x="1314" y="488">Badge Contratada.</text>
+  <rect class="box box-red" x="1485" y="425" width="120" height="90" rx="8"/>
+  <text class="h" x="1499" y="447">Rejeitada</text><text class="small" x="1499" y="472">Terminal.</text>
+  <rect class="box box-red" x="1645" y="425" width="105" height="90" rx="8"/>
+  <text class="h" x="1659" y="447">Cancelada</text><text class="small" x="1659" y="472">Terminal.</text>
+  <path class="arrow-orange" d="M1440 330 L1485 330"/>
+  <path class="arrow-green" d="M1560 375 L1560 405 L1370 405 L1370 425"/>
+  <path class="arrow" d="M1370 375 L1370 405 L1515 405 L1515 425"/>
+  <path class="arrow" d="M1560 375 L1560 405 L1695 405 L1695 425"/>
+  <text class="h" x="1300" y="555">Regras de UI</text>
+  <circle cx="1304" cy="578" r="2.4" fill="#334155"/><text class="small" x="1314" y="582">EmAnalise: Aprovar/Rejeitar.</text>
+  <circle cx="1304" cy="596" r="2.4" fill="#334155"/><text class="small" x="1314" y="600">AguardandoContratacao: Aguardando processamento contratacao.</text>
+  <circle cx="1304" cy="614" r="2.4" fill="#334155"/><text class="small" x="1314" y="618">Contratado: badge Contratada.</text>
+
+  <!-- SEQUENCIA -->
+  <rect class="panel-orange" x="24" y="650" width="860" height="360" rx="10"/>
+  <text class="section" x="46" y="678">SEQUENCIA DETALHADA - CAMINHO FELIZ E INDISPONIBILIDADE</text>
+  <g transform="translate(48,705)">
+    <rect class="box-gray" x="0" y="-18" width="810" height="34" rx="6"/><circle cx="17" cy="0" r="11" fill="#ea580c"/><text class="numtext" x="17" y="4" text-anchor="middle">A</text><text class="h" x="38" y="4">Frontend</text><text class="mono" x="178" y="4">POST /api/propostas</text><text class="tiny" x="410" y="4">PropostaService grava proposta com status EmAnalise.</text>
+    <rect class="box-gray" x="0" y="23" width="810" height="34" rx="6"/><circle cx="17" cy="41" r="11" fill="#ea580c"/><text class="numtext" x="17" y="45" text-anchor="middle">B</text><text class="h" x="38" y="45">Frontend</text><text class="mono" x="178" y="45">PATCH /api/propostas/{id}/status</text><text class="tiny" x="410" y="45">Usuario envia Aprovada; dominio persiste AguardandoContratacao.</text>
+    <rect class="box-gray" x="0" y="64" width="810" height="34" rx="6"/><circle cx="17" cy="82" r="11" fill="#ea580c"/><text class="numtext" x="17" y="86" text-anchor="middle">C</text><text class="h" x="38" y="86">PropostaService</text><text class="mono" x="178" y="86">BasicPublish proposta.aprovada</text><text class="tiny" x="410" y="86">Publica evento 1 com mensagem persistente no RabbitMQ.</text>
+    <rect class="box-gray" x="0" y="105" width="810" height="34" rx="6"/><circle cx="17" cy="123" r="11" fill="#ea580c"/><text class="numtext" x="17" y="127" text-anchor="middle">D</text><text class="h" x="38" y="127">RabbitMQ</text><text class="mono" x="178" y="127">Fila durable</text><text class="tiny" x="410" y="127">Se ContratacaoService esta offline, mensagem fica aguardando consumo.</text>
+    <rect class="box-gray" x="0" y="146" width="810" height="34" rx="6"/><circle cx="17" cy="164" r="11" fill="#ea580c"/><text class="numtext" x="17" y="168" text-anchor="middle">E</text><text class="h" x="38" y="168">ContratacaoService</text><text class="mono" x="178" y="168">PropostaStatusConsumer</text><text class="tiny" x="410" y="168">Ao subir, le fila, atualiza resumo e cria Contratacao se necessario.</text>
+    <rect class="box-gray" x="0" y="187" width="810" height="34" rx="6"/><circle cx="17" cy="205" r="11" fill="#ea580c"/><text class="numtext" x="17" y="209" text-anchor="middle">F</text><text class="h" x="38" y="209">ContratacaoService</text><text class="mono" x="178" y="209">BasicPublish proposta.contratada</text><text class="tiny" x="410" y="209">Publica evento 2 como callback para PropostaService.</text>
+    <rect class="box-gray" x="0" y="228" width="810" height="34" rx="6"/><circle cx="17" cy="246" r="11" fill="#ea580c"/><text class="numtext" x="17" y="250" text-anchor="middle">G</text><text class="h" x="38" y="250">PropostaService</text><text class="mono" x="178" y="250">ContratacaoStatusConsumer</text><text class="tiny" x="410" y="250">Consome callback e muda proposta para Contratado.</text>
+    <rect class="box-gray" x="0" y="269" width="810" height="34" rx="6"/><circle cx="17" cy="287" r="11" fill="#ea580c"/><text class="numtext" x="17" y="291" text-anchor="middle">H</text><text class="h" x="38" y="291">Frontend</text><text class="mono" x="178" y="291">GET /api/propostas</text><text class="tiny" x="410" y="291">Lista reflete AguardandoContratacao ou Contratado apos callback.</text>
+  </g>
+
+  <!-- PERSISTENCIA -->
+  <rect class="panel-green" x="910" y="650" width="420" height="360" rx="10"/>
+  <text class="section" x="932" y="678">PERSISTENCIA - TABELAS PRINCIPAIS</text>
+  <rect class="box box-green" x="934" y="705" width="180" height="135" rx="8"/>
+  <text class="h" x="948" y="727">SeguroPropostaDb.Propostas</text>
+  <text class="small" x="948" y="752">Id UUID PK</text><text class="small" x="948" y="770">NomeCliente, Documento</text><text class="small" x="948" y="788">TipoSeguroId + TipoSeguro</text><text class="small" x="948" y="806">Status de negocio</text><text class="small" x="948" y="824">DataCriacao/DataAtualizacao</text>
+  <rect class="box box-green" x="1130" y="705" width="180" height="135" rx="8"/>
+  <text class="h" x="1144" y="727">SeguroPropostaDb.TiposSeguro</text>
+  <text class="small" x="1144" y="752">Catalogo seedado</text><text class="small" x="1144" y="770">Id UUID estavel</text><text class="small" x="1144" y="788">Chave enum textual</text><text class="small" x="1144" y="806">Nome amigavel para UI</text>
+  <rect class="box box-teal" x="934" y="860" width="180" height="120" rx="8"/>
+  <text class="h" x="948" y="882">ContratacaoDb.PropostasResumo</text>
+  <text class="small" x="948" y="907">Id = PropostaId</text><text class="small" x="948" y="925">Status local da proposta</text><text class="small" x="948" y="943">DataAtualizacao</text><text class="small" x="948" y="961">Valida criacao</text>
+  <rect class="box box-teal" x="1130" y="860" width="180" height="120" rx="8"/>
+  <text class="h" x="1144" y="882">ContratacaoDb.Contratacoes</text>
+  <text class="small" x="1144" y="907">Id UUID PK</text><text class="small" x="1144" y="925">PropostaId unico</text><text class="small" x="1144" y="943">DataContratacao</text><text class="small" x="1144" y="961">Fonte do callback</text>
+
+  <!-- FALHAS -->
+  <rect class="panel-purple" x="1355" y="650" width="420" height="360" rx="10"/>
+  <text class="section" x="1378" y="678">FALHAS, RETENTATIVAS E IDEMPOTENCIA</text>
+  <rect class="box box-yellow" x="1380" y="705" width="175" height="125" rx="8"/>
+  <text class="h" x="1394" y="727">ContratacaoService OFF</text>
+  <text class="small" x="1394" y="752">Proposta fica Aguardando.</text><text class="small" x="1394" y="770">Nenhum erro visual.</text><text class="small" x="1394" y="788">Evento 1 fica na fila.</text><text class="small" x="1394" y="806">Ao subir, continua.</text>
+  <rect class="box box-purple" x="1580" y="705" width="170" height="125" rx="8"/>
+  <text class="h" x="1594" y="727">Callback pendente</text>
+  <text class="small" x="1594" y="752">Contratacao ja criada.</text><text class="small" x="1594" y="770">Callback ainda nao refletiu.</text><text class="small" x="1594" y="788">Reprocessar corrige.</text>
+  <rect class="box box-green" x="1380" y="855" width="175" height="120" rx="8"/>
+  <text class="h" x="1394" y="877">Idempotencia</text>
+  <text class="small" x="1394" y="902">Nao duplica contratacao.</text><text class="small" x="1394" y="920">Republica callback.</text><text class="small" x="1394" y="938">Ignora se ja Contratado.</text>
+  <rect class="box box-red" x="1580" y="855" width="170" height="120" rx="8"/>
+  <text class="h" x="1594" y="877">Evolucao produtiva</text>
+  <text class="small" x="1594" y="902">Outbox transacional.</text><text class="small" x="1594" y="920">Retry com backoff.</text><text class="small" x="1594" y="938">DLQ e observabilidade.</text>
+
+  <!-- ENDPOINTS -->
+  <rect class="panel-blue" x="24" y="1035" width="860" height="190" rx="10"/>
+  <text class="section" x="46" y="1063">ENDPOINTS, CONTRATOS E MENSAGENS</text>
+  <rect class="box box-blue" x="46" y="1085" width="210" height="120" rx="8"/>
+  <text class="h" x="60" y="1107">PropostaService API</text>
+  <text class="mono" x="60" y="1132">POST /api/propostas</text><text class="mono" x="60" y="1150">GET /api/propostas?status=</text><text class="mono" x="60" y="1168">GET /api/propostas/{id}</text><text class="mono" x="60" y="1186">PATCH /api/propostas/{id}/status</text>
+  <rect class="box box-teal" x="280" y="1085" width="210" height="120" rx="8"/>
+  <text class="h" x="294" y="1107">ContratacaoService API</text>
+  <text class="mono" x="294" y="1132">GET /api/contratacoes</text><text class="mono" x="294" y="1150">GET /api/contratacoes/{id}</text><text class="mono" x="294" y="1168">POST /api/contratacoes</text><text class="tiny" x="294" y="1186">POST idempotente; eventos entram via consumer.</text>
+  <rect class="box box-purple" x="514" y="1085" width="160" height="120" rx="8"/>
+  <text class="h" x="528" y="1107">Evento 1 Payload</text>
+  <text class="small" x="528" y="1132">PropostaId</text><text class="small" x="528" y="1150">Status</text><text class="small" x="528" y="1168">DataAtualizacao</text><text class="small" x="528" y="1186">PropostaAprovadaEvent</text>
+  <rect class="box box-purple" x="700" y="1085" width="160" height="120" rx="8"/>
+  <text class="h" x="714" y="1107">Evento 2 Payload</text>
+  <text class="small" x="714" y="1132">PropostaId</text><text class="small" x="714" y="1150">ContratacaoId</text><text class="small" x="714" y="1168">Status=Contratado</text><text class="small" x="714" y="1186">DataContratacao</text>
+
+  <!-- REGRAS -->
+  <rect class="panel-orange" x="910" y="1035" width="420" height="190" rx="10"/>
+  <text class="section" x="932" y="1063">REGRAS DE DOMINIO</text>
+  <circle cx="936" cy="1090" r="2.4" fill="#334155"/><text class="small" x="946" y="1094">Aprovada e comando; estado persistido vira AguardandoContratacao.</text>
+  <circle cx="936" cy="1112" r="2.4" fill="#334155"/><text class="small" x="946" y="1116">Contratado so vem por callback da ContratacaoService.</text>
+  <circle cx="936" cy="1134" r="2.4" fill="#334155"/><text class="small" x="946" y="1138">Rejeitada, Cancelada e Contratado sao estados finais.</text>
+  <circle cx="936" cy="1156" r="2.4" fill="#334155"/><text class="small" x="946" y="1160">AguardandoContratacao nao mostra botoes.</text>
+  <circle cx="936" cy="1178" r="2.4" fill="#334155"/><text class="small" x="946" y="1182">Contratacao manual e fallback idempotente, sem duplicar registros.</text>
+
+  <!-- LEGENDA -->
+  <rect class="panel" x="1355" y="1035" width="420" height="190" rx="10"/>
+  <text class="section" x="1378" y="1063">LEGENDA</text>
+  <line x1="1380" y1="1085" x2="1425" y2="1085" stroke="#2563eb" stroke-width="4"/><text class="small" x="1440" y="1090">Interacao usuario/API</text>
+  <line x1="1380" y1="1107" x2="1425" y2="1107" stroke="#16a34a" stroke-width="4"/><text class="small" x="1440" y="1112">Persistencia/estado final</text>
+  <line x1="1380" y1="1129" x2="1425" y2="1129" stroke="#7c3aed" stroke-width="4"/><text class="small" x="1440" y="1134">RabbitMQ/eventos</text>
+  <line x1="1380" y1="1151" x2="1425" y2="1151" stroke="#0f766e" stroke-width="4"/><text class="small" x="1440" y="1156">Consumers/servicos assincronos</text>
+  <line x1="1380" y1="1173" x2="1425" y2="1173" stroke="#ea580c" stroke-width="4"/><text class="small" x="1440" y="1178">Decisao/transicao</text>
+  <line x1="1380" y1="1195" x2="1425" y2="1195" stroke="#e11d48" stroke-width="4"/><text class="small" x="1440" y="1200">Falha/risco</text>
+  <text class="tiny" x="1380" y="1220">Setas cheias: fluxo principal. Setas tracejadas: callback/reprocessamento.</text>
+</svg>

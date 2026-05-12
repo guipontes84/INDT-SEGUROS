@@ -19,22 +19,25 @@ public sealed class PropostaInfrastructureTests
         segunda.AlterarStatus(PropostaStatus.Aprovada);
         await repository.UpdateAsync(segunda);
 
-        var aprovadas = await repository.ListAsync(PropostaStatus.Aprovada);
+        var aguardandoContratacao = await repository.ListAsync(PropostaStatus.AguardandoContratacao);
         var analise = await repository.ListAsync(PropostaStatus.EmAnalise);
 
-        Assert.Single(aprovadas);
+        Assert.Single(aguardandoContratacao);
         Assert.Single(analise);
-        Assert.Equal(segunda.Id, aprovadas.First().Id);
+        Assert.Equal(segunda.Id, aguardandoContratacao.First().Id);
     }
 
     [Fact]
-    public async Task InMemoryEventBus_DeveAcumularEventos()
+    public async Task InMemoryPropostaEventPublisher_DeveAcumularEventos()
     {
-        var eventBus = new InMemoryEventBus();
+        var eventPublisher = new InMemoryPropostaEventPublisher();
+        var primeira = new Proposta("Ana", "123", TipoSeguro.Auto, 1500);
+        var segunda = new Proposta("Bruno", "456", TipoSeguro.Vida, 2500);
+        segunda.AlterarStatus(PropostaStatus.Aprovada);
 
-        await eventBus.PublishAsync(new PropostaCriadaEvent(Guid.NewGuid(), "EmAnalise", DateTime.UtcNow));
-        await eventBus.PublishAsync(new PropostaAprovadaEvent(Guid.NewGuid(), "Aprovada", DateTime.UtcNow));
+        await eventPublisher.PublicarPropostaCriadaAsync(primeira);
+        await eventPublisher.PublicarPropostaAprovadaAsync(segunda);
 
-        Assert.Equal(2, eventBus.PublishedEvents.Count);
+        Assert.Equal(2, eventPublisher.PublishedEvents.Count);
     }
 }

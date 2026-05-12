@@ -4,15 +4,18 @@ public sealed class TipoSeguroDominio
 {
     private TipoSeguroDominio()
     {
+        Chave = TipoSeguro.Auto;
         Nome = string.Empty;
     }
 
-    public TipoSeguroDominio(TipoSeguro id, string nome)
+    public TipoSeguroDominio(Guid id, TipoSeguro chave, string nome)
     {
         Id = id;
+        Chave = chave;
         Nome = nome;
     }
 
-    public TipoSeguro Id { get; private set; }
+    public Guid Id { get; private set; }
+    public TipoSeguro Chave { get; private set; }
     public string Nome { get; private set; }
 }

@@ -1,11 +1,13 @@
 using ContratacaoService.Domain;
+using ContratacaoService.Application.Ports.Out;
 using BaseComum;
 
 namespace ContratacaoService.Application;
 
 public sealed class ContratacaoAppService(
     IContratacaoRepository contratacaoRepository,
-    IPropostaResumoRepository propostaResumoRepository)
+    IPropostaResumoRepository propostaResumoRepository,
+    IContratacaoEventPublisher eventPublisher)
 {
     public async Task<ContratacaoResponse> ContratarAsync(ContratarPropostaRequest request, CancellationToken cancellationToken = default)
     {
@@ -15,18 +17,21 @@ public sealed class ContratacaoAppService(
             throw new DomainException("Proposta nao encontrada para contratacao.");
         }
 
-        if (!string.Equals(propostaResumo.Status, "Aprovada", StringComparison.OrdinalIgnoreCase))
+        if (propostaResumo.Status != PropostaResumoStatus.AguardandoContratacao)
         {
-            throw new DomainException("Somente proposta aprovada pode ser contratada.");
+            throw new DomainException("Somente proposta aguardando contratacao pode ser contratada.");
         }
 
-        if (await contratacaoRepository.ExistsByPropostaIdAsync(request.PropostaId, cancellationToken))
+        var existente = await contratacaoRepository.GetByPropostaIdAsync(request.PropostaId, cancellationToken);
+        if (existente is not null)
         {
-            throw new DomainException("Proposta ja contratada.");
+            await eventPublisher.PublicarPropostaContratadaAsync(existente, cancellationToken);
+            return ContratacaoResponse.From(existente);
         }
 
         var contratacao = new Contratacao(request.PropostaId);
         await contratacaoRepository.AddAsync(contratacao, cancellationToken);
+        await eventPublisher.PublicarPropostaContratadaAsync(contratacao, cancellationToken);
 
         return ContratacaoResponse.From(contratacao);
     }

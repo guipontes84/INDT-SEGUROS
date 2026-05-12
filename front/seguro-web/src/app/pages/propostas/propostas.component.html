@@ -7,6 +7,8 @@
         <option value="">Todos</option>
         <option value="EmAnalise">Em Analise</option>
         <option value="Aprovada">Aprovada</option>
+        <option value="AguardandoContratacao">Aguardando Contratacao</option>
+        <option value="Contratado">Contratado</option>
         <option value="Rejeitada">Rejeitada</option>
         <option value="Cancelada">Cancelada</option>
       </select>
@@ -48,7 +50,8 @@
             </ng-container>
 
             <span *ngIf="estaContratada(proposta)" class="badge">Contratada</span>
-            <span *ngIf="!podeAnalisar(proposta) && !podeContratar(proposta) && !estaContratada(proposta)" class="muted">Sem acoes</span>
+            <span *ngIf="aguardandoContratacao(proposta)" class="muted">Aguardando processamento contratacao</span>
+            <span *ngIf="!podeAnalisar(proposta) && !podeContratar(proposta) && !aguardandoContratacao(proposta) && !estaContratada(proposta)" class="muted">Sem acoes</span>
           </td>
         </tr>
       </tbody>

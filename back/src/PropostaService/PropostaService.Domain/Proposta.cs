@@ -29,6 +29,7 @@ public sealed class Proposta : Entity
 
         NomeCliente = nomeCliente;
         DocumentoCliente = documentoCliente;
+        TipoSeguroId = TipoSeguroIds.Obter(tipoSeguro);
         TipoSeguro = tipoSeguro;
         ValorSeguro = valorSeguro;
         Status = PropostaStatus.EmAnalise;
@@ -38,6 +39,7 @@ public sealed class Proposta : Entity
 
     public string NomeCliente { get; private set; }
     public string DocumentoCliente { get; private set; }
+    public Guid TipoSeguroId { get; private set; }
     public TipoSeguro TipoSeguro { get; private set; }
     public decimal ValorSeguro { get; private set; }
     public PropostaStatus Status { get; private set; }
@@ -46,22 +48,29 @@ public sealed class Proposta : Entity
 
     public void AlterarStatus(PropostaStatus status)
     {
-        if (Status is PropostaStatus.Rejeitada or PropostaStatus.Cancelada)
+        if (Status is PropostaStatus.Rejeitada or PropostaStatus.Cancelada or PropostaStatus.Contratado)
         {
-            throw new DomainException("Propostas rejeitadas ou canceladas nao podem ter o status alterado.");
+            throw new DomainException("Propostas rejeitadas, canceladas ou contratadas nao podem ter o status alterado.");
         }
 
-        if (Status == PropostaStatus.Aprovada && status != PropostaStatus.Cancelada)
+        if (Status == PropostaStatus.EmAnalise && status is PropostaStatus.Contratado)
         {
-            throw new DomainException("Propostas aprovadas somente podem ser canceladas.");
+            throw new DomainException("Proposta em analise nao pode ser marcada como contratada.");
+        }
+
+        if (Status == PropostaStatus.AguardandoContratacao && status is not (PropostaStatus.Cancelada or PropostaStatus.Contratado))
+        {
+            throw new DomainException("Propostas aguardando contratacao somente podem ser canceladas ou contratadas.");
         }
 
         if (status == PropostaStatus.EmAnalise)
         {
-            throw new DomainException("Informe Aprovada, Rejeitada ou Cancelada para alterar a proposta.");
+            throw new DomainException("Informe Aprovada, Rejeitada, Cancelada ou Contratado para alterar a proposta.");
         }
 
-        Status = status;
+        Status = status == PropostaStatus.Aprovada
+            ? PropostaStatus.AguardandoContratacao
+            : status;
         DataAtualizacao = DateTime.UtcNow;
     }
 }

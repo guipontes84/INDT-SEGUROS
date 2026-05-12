@@ -20,7 +20,7 @@ public sealed class PropostaResumoAppServiceTests
         var resumo = await repository.GetByPropostaIdAsync(propostaId);
 
         Assert.NotNull(resumo);
-        Assert.Equal("Aprovada", resumo!.Status);
+        Assert.Equal(PropostaResumoStatus.Aprovada, resumo!.Status);
     }
 
     [Theory]
@@ -43,6 +43,6 @@ public sealed class PropostaResumoAppServiceTests
         var resumo = await repository.GetByPropostaIdAsync(propostaId);
 
         Assert.NotNull(resumo);
-        Assert.Equal(status, resumo!.Status);
+        Assert.Equal(Enum.Parse<PropostaResumoStatus>(status), resumo!.Status);
     }
 }
